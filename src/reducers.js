@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux'
 import {CALL_UP,CALL_DOWN} from './actions'
 
-
 const initialState = {
-    movements: 'stop'
+    "movements": "stop",
+    "next stop OTR": "",
+    "next stop after": "",
+    "destination": "",
+    "current level": ""
 }
-function setMovements(state = initialState, action) {
+function reducer(state = initialState, action) {
     switch (action.type) {
         case CALL_UP:
             return [...state,{movement: "GOING UPSTAIRS"}]
@@ -15,6 +18,4 @@ function setMovements(state = initialState, action) {
         return state
   }
 }
-
-const state = combineReducers({setMovements})
-export default state
+export default combineReducers({reducer})
