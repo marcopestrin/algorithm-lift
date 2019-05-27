@@ -15,26 +15,19 @@ class liftComponent extends React.Component {
     }
     
     render() {
+        var level = []; 
+        for (var i = 10; i > 3; i--) {
+            const thisLevel = i;
+            level.push(
+                <div>
+                    <div className='Level'>{thisLevel}</div>
+                    <button className='up' onClick={()=>this.props.callUp({thisLevel})}>UP!</button>
+                    <button className='down' onClick={()=>this.props.callDown({thisLevel})}>DOWN!</button>
+                </div>
+            );
+        }
         let lift = (
-            <div className="Skyscraper">
-
-                <div className="Level">4</div>
-                <button className="up" onClick={this.props.callUp}>UP!</button>
-                <button className="down" onClick={this.props.callDown}>DOWN!</button>
-
-                <div className="Level">3</div>
-                <button className="up">UP!</button>
-                <button className="down">DOWN!</button>
-
-                <div className="Level">2</div>
-                <button className="up">UP!</button>
-                <button className="down">DOWN!</button>
-
-                <div className="Level">1</div>
-                <button className="up">UP!</button>
-                <button className="down">DOWN!</button>
-
-            </div>
+            <div className="Skyscraper">{level}</div>
         );
         return lift
     }
@@ -45,8 +38,8 @@ const mapStateToProps = state => ({
     
 })
 const mapDispatchToProps = (dispatch) => ({
-    callUp: () => dispatch(callUp()),
-    callDown: () => dispatch(callDown()),
+    callUp: (i) => dispatch(callUp(i.thisLevel)),
+    callDown: (i) => dispatch(callDown(i.thisLevel)),
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(liftComponent);

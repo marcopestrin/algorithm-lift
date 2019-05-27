@@ -11,9 +11,9 @@ const initialState = {
 function reducer(state = initialState, action) {
     switch (action.type) {
         case CALL_UP:
-            return Object.assign({}, state, { movement:"GOING UPSTAIRS" });
+            return Object.assign({}, state, { movement:"GOING UPSTAIRS", nextStopOTR:action.calledLevel });
         case CALL_DOWN:
-            return Object.assign({}, state, { movement:"GOING DOWNSTAIRS" });
+            return Object.assign({}, state, { movement:"GOING DOWNSTAIRS", nextStopOTR:action.calledLevel  });
         default:
             return state
     }
