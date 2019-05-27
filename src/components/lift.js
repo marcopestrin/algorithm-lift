@@ -16,7 +16,7 @@ class liftComponent extends React.Component {
     
     render() {
         var level = []; 
-        for (var i = 10; i > 3; i--) {
+        for (var i = 10; i > 0; i--) {
             const thisLevel = i;
             level.push(
                 <div>
