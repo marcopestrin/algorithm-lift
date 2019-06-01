@@ -14,7 +14,7 @@ class liftComponent extends React.Component {
 
     }
     
-    render() {
+    render(currentLevel) {
         var level = []; 
         for (var i = 10; i > 0; i--) {
             const thisLevel = i;
@@ -27,15 +27,18 @@ class liftComponent extends React.Component {
             );
         }
         let lift = (
-            <div className="Skyscraper">{level}</div>
+            <div>
+                <div><h1>{this.props.currentLevel.reducer.movement}</h1></div>
+                <div className="Skyscraper">{level}</div>
+            </div>
         );
         return lift
     }
 
-}
+} 
 
 const mapStateToProps = state => ({
-    
+    currentLevel: state
 })
 const mapDispatchToProps = (dispatch) => ({
     callUp: (i) => dispatch(callUp(i.thisLevel)),

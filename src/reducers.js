@@ -6,7 +6,7 @@ const initialState = {
     nextStopOTR: [],
     nextStopAfter: "",
     destination: "",
-    currentLevel: ""
+    currentLevel: 1
 }
 const lists = {
     oldList:[],
@@ -28,6 +28,7 @@ function reducer(state = initialState, action) {
             lists.newList.sort(); // sort my array to create a progressive step of level
             lists.newList = uniq(lists.newList); //just one stop for each level
             var destination = lists.newList[lists.newList.length - 1]; //get the last element of array (bigger number)
+            
             if(state.nextStopOTR < action.calledLevel){
                 console.log("il piano è stradafacendo");
                 //controllato se il livello selezionato è stradafacendo
