@@ -9,6 +9,14 @@ class liftComponent extends React.Component {
     constructor(props){
         super(props);
     }
+    componentDidMount(){
+        this.intervalId = setInterval(
+            () => {
+                this.props.handlerPosition(this.props.currentLevel.reducer.currentLevel)
+            },
+            1000
+        );
+    }
 
     render() {
 
@@ -38,7 +46,7 @@ const mapStateToProps = state => ({
     currentLevel: state
 })
 const mapDispatchToProps = (dispatch) => ({
-    handlerPosition: (currentLevel) => dispatch(handlerPosition),
+    handlerPosition: (currentLevel) => dispatch(handlerPosition(currentLevel)),
     callUp: (i) => dispatch(callUp(i.thisLevel)),
     callDown: (i) => dispatch(callDown(i.thisLevel)),
 })
