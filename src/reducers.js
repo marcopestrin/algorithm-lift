@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import {CALL_UP,CALL_DOWN} from './actions'
+import {CALL_UP,CALL_DOWN,HANDLER_POSITION} from './actions'
 
 const initialState = {
     movement: "stop",
@@ -41,8 +41,31 @@ function reducer(state = initialState, action) {
             }else{
                 return Object.assign({}, state, { movement:"GOING UPSTAIRS", nextStopOTR:[lists.newList] });
             }
+
         case CALL_DOWN:
-            return Object.assign({}, state, { movement:"GOING DOWNSTAIRS", nextStopOTR:action.calledLevel  });
+            lists.oldList = state.nextStopOTR;
+            lists.newList.push(action.calledLevel);
+            lists.newList.sort(); 
+            lists.newList.reverse(); 
+            lists.newList = uniq(lists.newList);
+            var destination = lists.newList[lists.newList.length - 1];
+            
+            if(state.nextStopOTR < action.calledLevel){
+                if(state.nextStopOTR > 1 && state.nextStopOTR < 10){
+                    return Object.assign({}, state, { movement:"GOING DOWNTAIRS", nextStopOTR:[lists.newList], destination:destination });
+                }
+                return Object.assign({}, state, { movement:"GOING DOWNSTAIRS", nextStopOTR:[lists.newList], destination:destination });
+            }else{
+                return Object.assign({}, state, { movement:"GOING DOWNSTAIRS", nextStopOTR:[lists.newList] });
+            }
+            
+        case HANDLER_POSITION:
+            var currentLevel = action.currentLevel
+            if(state.movement == "GOING UPSTAIRS") {
+                alert("yess!!") //debuggin!!!
+            }
+            return Object.assign({}, state, {  });
+
         default:
             return state
     }

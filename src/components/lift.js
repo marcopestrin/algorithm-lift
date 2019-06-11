@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {callUp, callDown} from '../actions'
+import {callUp, callDown, handlerPosition} from '../actions'
 import './lift.css';
 
 
@@ -10,13 +10,10 @@ class liftComponent extends React.Component {
         super(props);
     }
 
-    componentDidMount(){
+    render() {
 
-    }
-    
-    render(currentLevel) {
         var level = []; 
-        for (var i = 10; i > 0; i--) {
+        for (var i = 9; i > 0; i--) {
             const thisLevel = i;
             level.push(
                 <div>
@@ -28,7 +25,7 @@ class liftComponent extends React.Component {
         }
         let lift = (
             <div>
-                <div><h1>{this.props.currentLevel.reducer.movement}</h1></div>
+                <div><h1>{this.props.currentLevel.reducer.currentLevel}</h1></div>
                 <div className="Skyscraper">{level}</div>
             </div>
         );
@@ -41,6 +38,7 @@ const mapStateToProps = state => ({
     currentLevel: state
 })
 const mapDispatchToProps = (dispatch) => ({
+    handlerPosition: (currentLevel) => dispatch(handlerPosition),
     callUp: (i) => dispatch(callUp(i.thisLevel)),
     callDown: (i) => dispatch(callDown(i.thisLevel)),
 })
