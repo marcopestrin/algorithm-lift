@@ -25,20 +25,29 @@ function reducer(state = initialState, action) {
     console.log("cosa ho chiamato?", action.calledLevel);
     switch (action.type) {
         case CALL_UP:
+            if(action.calledLevel < state.currentLevel) { 
+                lists.nextList.push(action.calledLevel)
+                //se l'ascensore sta andando su e io chiamo giù io mi preparo la lista da mettere in coda
+                //se l'ascensore sta andando su e io chiamo su ma l'ascensore è già passato vado in coda
+                return Object.assign({}, state, {nextStopAfter:[lists.nextList]})
+            }
+
             lists.oldList = state.nextStopOTR;
             lists.newList.push(action.calledLevel);
             lists.newList.sort(); // sort my array to create a progressive step of level
             lists.newList = uniq(lists.newList); //just one stop for each level
             var destination = lists.newList[lists.newList.length - 1]; //get the last element of array (bigger number)
-            if(state.nextStopOTR < action.calledLevel){
-                console.log("il piano è stradafacendo");
-                //controllato se il livello selezionato è stradafacendo
-                return Object.assign({}, state, { movement:"GOING UPSTAIRS", nextStopOTR:[lists.newList], destination:destination });
-            }else{
-                return Object.assign({}, state, { movement:"GOING UPSTAIRS", nextStopOTR:[lists.newList] });
-            }
+
+            return Object.assign({}, state, { movement:"GOING UPSTAIRS", nextStopOTR:[lists.newList], destination:destination });
+
 
         case CALL_DOWN:
+
+            if(action.calledLevel > state.currentLevel) { 
+                lists.nextList.push(action.calledLevel)
+                return Object.assign({}, state, {nextStopAfter:[lists.nextList]})
+            }
+
             lists.oldList = state.nextStopOTR;
             lists.newList.push(action.calledLevel);
             lists.newList.sort(); 
@@ -46,18 +55,8 @@ function reducer(state = initialState, action) {
             lists.newList = uniq(lists.newList);
             var destination = lists.newList[lists.newList.length - 1];
 
-            if(state.movement === "GOING UPSTAIRS"){
-                lists.nextList.push(action.calledLevel)
-                //se l'ascensore sta andando su e io chiamo giù io mi preparo la lista da mettere in coda
-                //ATTENZIONE DA FARE ANCHE NEL SENSO INVERSO!!
-                return Object.assign({}, state, {nextStopAfter:[lists.nextList]})
-            } 
-
-            if(state.nextStopOTR < action.calledLevel){
-                return Object.assign({}, state, { movement:"GOING DOWNSTAIRS", nextStopOTR:[lists.newList], destination:destination });
-            }else{
-                return Object.assign({}, state, { movement:"GOING DOWNSTAIRS", nextStopOTR:[lists.newList] });
-            }
+            return Object.assign({}, state, { movement:"GOING DOWNSTAIRS", nextStopOTR:[lists.newList], destination:destination });
+            
             
         case HANDLER_POSITION:
             var currentLevel = action.currentLevel

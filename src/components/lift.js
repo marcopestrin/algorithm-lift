@@ -14,7 +14,7 @@ class liftComponent extends React.Component {
             () => {
                 this.props.handlerPosition(this.props.currentLevel.reducer.currentLevel)
             },
-            3000
+            1000
         );
     }
 
