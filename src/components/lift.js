@@ -25,7 +25,7 @@ class liftComponent extends React.Component {
             const thisLevel = i;
             level.push(
                 <div>
-                    <div className='Level'>{thisLevel}</div>
+                    <div className={this.props.currentLevel.reducer.currentLevel == thisLevel ? 'Level Now' : 'Level'}>{thisLevel}</div>
                     <button className='up' onClick={()=>this.props.callUp({thisLevel})}>UP!</button>
                     <button className='down' onClick={()=>this.props.callDown({thisLevel})}>DOWN!</button>
                 </div>
